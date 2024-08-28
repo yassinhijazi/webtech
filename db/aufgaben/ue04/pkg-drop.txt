@@ -1,0 +1,2 @@
+drop package body cooling_service;
+drop package cooling_service;

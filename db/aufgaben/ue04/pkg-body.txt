@@ -1,0 +1,19 @@
+create or replace package body cooling_service as
+
+
+  -----------------------------------------------------------------------------  
+  -- transfer_sample
+  -----------------------------------------------------------------------------  
+  procedure transfer_sample(
+    p_sample_id sample.sampleid%type, 
+    p_diameter_in_cm tray.diameterincm%type
+  ) as
+  begin
+    null;
+  end transfer_sample; 
+
+
+  
+
+end cooling_service;
+

@@ -1,3 +1,15 @@
+# auth
+**/DbCred.java
+
+# vscode 
+.vscode
+
+# eclipse
+.settings
+.classpath
+.projekt
+bin
+
 # Compiled class file
 *.class
 
