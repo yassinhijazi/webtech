@@ -2,7 +2,7 @@ package de.htwberlin.dbtech.bsp.test;
 
 public class SimpleService {
   public String hw() {
-    return "hwx";
+    return "hw";
   }
 
   public String exe(int code) {

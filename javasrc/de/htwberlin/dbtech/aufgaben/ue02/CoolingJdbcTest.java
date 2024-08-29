@@ -1,6 +1,6 @@
 package de.htwberlin.dbtech.aufgaben.ue02;
 
-import java.net.URL;
+import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.IRowValueProvider;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.RowFilterTable;
-import org.dbunit.dataset.csv.CsvURLDataSet;
+import org.dbunit.dataset.csv.CsvDataSet;
 import org.dbunit.dataset.filter.IRowFilter;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.AfterClass;
@@ -35,23 +35,21 @@ import de.htwberlin.dbtech.utils.DbUnitUtils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CoolingJdbcTest {
   private static final Logger L = LoggerFactory.getLogger(CoolingJdbcTest.class);
-  private static IDatabaseTester dbTester;
   private static IDatabaseConnection dbTesterCon = null;
-  private static String dataDirPath = "de/htwberlin/test/data/jdbc/";
-  private static URL dataFeedUrl = ClassLoader.getSystemResource(dataDirPath);
-  private static IDataSet feedDataSet = null;
-
+  private static IDataSet pre = null;
+  
   private static ICoolingJdbc cj = new CoolingJdbc();
 
   @BeforeClass
   public static void setUp() {
     L.debug("setup: start");
     try {
-      dbTester = new JdbcDatabaseTester(DbCred.driverClass, DbCred.url, DbCred.user, DbCred.password, DbCred.schema);
+      IDatabaseTester dbTester = new JdbcDatabaseTester(DbCred.driverClass, DbCred.url, DbCred.user, DbCred.password,
+          DbCred.schema);
       dbTesterCon = dbTester.getConnection();
-      feedDataSet = new CsvURLDataSet(dataFeedUrl);
-      dbTester.setDataSet(feedDataSet);
-      DatabaseOperation.CLEAN_INSERT.execute(dbTesterCon, feedDataSet);
+      pre = new CsvDataSet(new File("test-data/ue02"));
+      dbTester.setDataSet(pre);
+      DatabaseOperation.CLEAN_INSERT.execute(dbTesterCon, pre);
       cj.setConnection(dbTesterCon.getConnection());
     } catch (Exception e) {
       DbUnitUtils.closeDbUnitConnectionQuietly(dbTesterCon);
@@ -144,7 +142,7 @@ public class CoolingJdbcTest {
     databaseDataSet.addTable("Sample", sql);
 
     ITable actualTable = databaseDataSet.getTable("Sample");
-    ITable expectedTable = feedDataSet.getTable("Sample");
+    ITable expectedTable = pre.getTable("Sample");
 
     // Vergleiche, dass sich nichts veraendert hat
     Assertion.assertEquals(expectedTable, actualTable);
@@ -167,8 +165,8 @@ public class CoolingJdbcTest {
   }
 
   /**
-   * Test von clearTray Entsorgung von Tablett 6, das keine Proben enthaelt.
-   * Test, ob nichts geloescht wurde.
+   * Test von clearTray Entsorgung von Tablett 6, das keine Proben enthaelt. Test,
+   * ob nichts geloescht wurde.
    * 
    * @throws SQLException
    * @throws DatabaseUnitException
@@ -183,7 +181,7 @@ public class CoolingJdbcTest {
     databaseDataSet.addTable("Sample", sql);
 
     ITable actualTable = databaseDataSet.getTable("Sample");
-    ITable expectedTable = feedDataSet.getTable("Sample");
+    ITable expectedTable = pre.getTable("Sample");
 
     // Vergleiche, dass sich nichts veraendert hat
     Assertion.assertEquals(expectedTable, actualTable);
@@ -209,7 +207,7 @@ public class CoolingJdbcTest {
     ITable actualTable = databaseDataSet.getTable("Sample");
 
     // Filtere die geloeschen Datensaetze aus dem feedDataSet
-    ITable sampleTable = feedDataSet.getTable("Sample");
+    ITable sampleTable = pre.getTable("Sample");
     IRowFilter rowFilter = new IRowFilter() {
       public boolean accept(IRowValueProvider rowValueProvider) {
         Object columnValue = null;

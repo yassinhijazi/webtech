@@ -1,6 +1,6 @@
 package de.htwberlin.dbtech.bsp.test;
 
-import java.net.URL;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -10,7 +10,7 @@ import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.csv.CsvURLDataSet;
+import org.dbunit.dataset.csv.CsvDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -25,51 +25,51 @@ import de.htwberlin.dbtech.utils.DbUnitUtils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DbTest {
   private static final Logger L = LoggerFactory.getLogger(DbTest.class);
-  private static IDatabaseTester dbTester;
   private static IDatabaseConnection dbTesterCon = null;
-  private static String dataDirPath = "de/htwberlin/test/data/";
-  private static URL dataFeedUrl = ClassLoader.getSystemResource(dataDirPath);
-  private static IDataSet feedDataSet = null;
 
   @BeforeClass
   public static void setUp() {
-    L.debug("start");
+    L.debug("setUp - start");
     try {
-      dbTester = new JdbcDatabaseTester(DbCred.driverClass, DbCred.url, DbCred.user, DbCred.password, DbCred.schema);
+      IDatabaseTester dbTester = new JdbcDatabaseTester(DbCred.driverClass, DbCred.url, DbCred.user, DbCred.password,
+          DbCred.schema);
       dbTesterCon = dbTester.getConnection();
-      feedDataSet = new CsvURLDataSet(dataFeedUrl);
-      dbTester.setDataSet(feedDataSet);
-      DatabaseOperation.CLEAN_INSERT.execute(dbTesterCon, feedDataSet);
+      IDataSet pre = new CsvDataSet(new File("test-data/raum/pre"));
+      dbTester.setDataSet(pre);
+      DatabaseOperation.CLEAN_INSERT.execute(dbTesterCon, pre);
     } catch (Exception e) {
       DbUnitUtils.closeDbUnitConnectionQuietly(dbTesterCon);
       throw new RuntimeException(e);
     }
+    L.debug("setUp - ende");
   }
 
   @AfterClass
   public static void tearDown() throws Exception {
-    L.debug("start");
+    L.debug("tearDown - start");
     DbUnitUtils.closeDbUnitConnectionQuietly(dbTesterCon);
+    L.debug("tearDown - ende");
   }
 
   @org.junit.Test
   public void testInsertNewRoom() throws Exception {
+    L.info("testInsertNewRoom - start");
     Connection c = dbTesterCon.getConnection();
     String sql = "insert into raum values(4,'A030', 30)";
-     Statement s = c.createStatement();
-     s.executeUpdate(sql);
+    Statement s = c.createStatement();
+    s.executeUpdate(sql);
 
     // Hole Daten aus der Tabelle Raum
     IDataSet databaseDataSet = dbTesterCon.createDataSet();
     ITable actualTable = databaseDataSet.getTable("raum");
 
-    // Lade erwartete Daten aus der Testdaten-DB
-    URL url = ClassLoader.getSystemResource("de/htwberlin/test/post/");
-    IDataSet expectedDataSet = new CsvURLDataSet(url);
+    // Lade erwartete Daten aus der csv-Datei
+    IDataSet expectedDataSet = new CsvDataSet(new File("test-data/raum/post"));
     ITable expectedTable = expectedDataSet.getTable("raum");
 
     // Pruefe, ob die Datenmengen uebereinstimmen
     Assertion.assertEquals(expectedTable, actualTable);
+    L.info("testInsertNewRoom - ende");
   }
 
 }

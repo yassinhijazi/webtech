@@ -1,6 +1,6 @@
 package de.htwberlin.dbtech.aufgaben.ue04;
 
-import java.net.URL;
+import java.io.File;
 import java.sql.SQLException;
 
 import org.dbunit.Assertion;
@@ -11,7 +11,7 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.csv.CsvURLDataSet;
+import org.dbunit.dataset.csv.CsvDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -27,11 +27,8 @@ import de.htwberlin.dbtech.utils.DbUnitUtils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CoolingServicePlSqlTest {
   private static final Logger L = LoggerFactory.getLogger(CoolingServicePlSqlTest.class);
-  private static IDatabaseTester dbTester;
   private static IDatabaseConnection dbTesterCon = null;
-  private static String dataDirPath = "de/htwberlin/test/data/service/";
-  private static URL dataFeedUrl = ClassLoader.getSystemResource(dataDirPath);
-  private static IDataSet feedDataSet = null;
+  private static IDataSet pre = null;
 
   private static ICoolingService cs = new CoolingServicePlSql();
 
@@ -39,11 +36,12 @@ public class CoolingServicePlSqlTest {
   public static void setUp() {
     L.debug("setUp: start");
     try {
-      dbTester = new JdbcDatabaseTester(DbCred.driverClass, DbCred.url, DbCred.user, DbCred.password, DbCred.schema);
+      IDatabaseTester dbTester = new JdbcDatabaseTester(DbCred.driverClass, DbCred.url, DbCred.user, DbCred.password,
+          DbCred.schema);
       dbTesterCon = dbTester.getConnection();
-      feedDataSet = new CsvURLDataSet(dataFeedUrl);
-      dbTester.setDataSet(feedDataSet);
-      DatabaseOperation.CLEAN_INSERT.execute(dbTesterCon, feedDataSet);
+      pre = new CsvDataSet(new File("test-data/ue03-04/pre"));
+      dbTester.setDataSet(pre);
+      DatabaseOperation.CLEAN_INSERT.execute(dbTesterCon, pre);
       cs.setConnection(dbTesterCon.getConnection());
     } catch (Exception e) {
       DbUnitUtils.closeDbUnitConnectionQuietly(dbTesterCon);
@@ -100,8 +98,9 @@ public class CoolingServicePlSqlTest {
 
   /**
    * Ablaufdatum Probe zu gross. Freies Tablett richtiger Groesse vorhanden
-   * @throws SQLException 
-   * @throws DatabaseUnitException 
+   * 
+   * @throws SQLException
+   * @throws DatabaseUnitException
    */
   @org.junit.Test
   public void testCoolingService05() throws SQLException, DatabaseUnitException {
@@ -119,18 +118,17 @@ public class CoolingServicePlSqlTest {
     ITable actualTablePlace = databaseDataSet.getTable("Place");
 
     // Lade erwartete Daten
-    URL url = ClassLoader.getSystemResource(dataDirPath + "post01/");
-    IDataSet expectedDataSet = new CsvURLDataSet(url);
+    IDataSet expectedDataSet = new CsvDataSet(new File("test-data/ue03-04/post01"));
     ITable expectedTableTray = expectedDataSet.getTable("Tray");
     ITable expectedTablePlace = expectedDataSet.getTable("Place");
 
     Assertion.assertEquals(expectedTableTray, actualTableTray);
     Assertion.assertEquals(expectedTablePlace, actualTablePlace);
-  }  
-  
+  }
+
   /**
-   * Ablaufdatum Probe ok. Alle passenden Tabletts voll. Freies Tablett
-   * richtiger Gr��e vorhanden.
+   * Ablaufdatum Probe ok. Alle passenden Tabletts voll. Freies Tablett richtiger
+   * Gr��e vorhanden.
    */
   @org.junit.Test
   public void testCoolingService06() throws SQLException, DatabaseUnitException {
@@ -148,8 +146,7 @@ public class CoolingServicePlSqlTest {
     ITable actualTablePlace = databaseDataSet.getTable("Place");
 
     // Lade erwartete Daten
-    URL url = ClassLoader.getSystemResource(dataDirPath + "post02/");
-    IDataSet expectedDataSet = new CsvURLDataSet(url);
+    IDataSet expectedDataSet = new CsvDataSet(new File("test-data/ue03-04/post02"));
     ITable expectedTableTray = expectedDataSet.getTable("Tray");
     ITable expectedTablePlace = expectedDataSet.getTable("Place");
 
@@ -159,7 +156,8 @@ public class CoolingServicePlSqlTest {
 
   /**
    * Ablaufdatum fuer 2 Proben ok. Platz am Ende frei.
-   * @throws DatabaseUnitException 
+   * 
+   * @throws DatabaseUnitException
    */
   @org.junit.Test
   public void testCoolingService07() throws DatabaseUnitException {
@@ -179,8 +177,7 @@ public class CoolingServicePlSqlTest {
     ITable actualTablePlace = databaseDataSet.getTable("Place");
 
     // Lade erwartete Daten
-    URL url = ClassLoader.getSystemResource(dataDirPath + "post03/");
-    IDataSet expectedDataSet = new CsvURLDataSet(url);
+    IDataSet expectedDataSet = new CsvDataSet(new File("test-data/ue03-04/post03"));
     ITable expectedTableTray = expectedDataSet.getTable("Tray");
     ITable expectedTablePlace = expectedDataSet.getTable("Place");
 
@@ -190,7 +187,8 @@ public class CoolingServicePlSqlTest {
 
   /**
    * Ablaufdatum fuer 2 Proben ok. Platz zwischendrin frei.
-   * @throws DatabaseUnitException 
+   * 
+   * @throws DatabaseUnitException
    */
   @org.junit.Test
   public void testCoolingService08() throws DatabaseUnitException {
@@ -210,8 +208,7 @@ public class CoolingServicePlSqlTest {
     ITable actualTablePlace = databaseDataSet.getTable("Place");
 
     // Lade erwartete Daten
-    URL url = ClassLoader.getSystemResource(dataDirPath + "post04/");
-    IDataSet expectedDataSet = new CsvURLDataSet(url);
+    IDataSet expectedDataSet = new CsvDataSet(new File("test-data/ue03-04/post04"));
     ITable expectedTableTray = expectedDataSet.getTable("Tray");
     ITable expectedTablePlace = expectedDataSet.getTable("Place");
 
