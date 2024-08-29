@@ -7,7 +7,7 @@
 # eclipse
 .settings
 .classpath
-.projekt
+.project
 bin
 
 # Compiled class file
