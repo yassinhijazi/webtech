@@ -19,6 +19,14 @@ Zur Bearbeitung der Aufgaben müssen sie das Datenmodell in ihrer eigenen Datenb
 - SQL-Code zur Erzeugung der Tabellen und zum Einfügen der Daten
 [(link)](https://github.com/ic-htw/dbtech-pks/tree/main/db/proben-kuehlschrank)
 
+## Logging
+```java
+-Dorg.slf4j.simpleLogger.showThreadName="false"
+-Dorg.slf4j.simpleLogger.logFile="System.out"
+-Dorg.slf4j.simpleLogger.log.org.dbunit="error"
+-Dorg.slf4j.simpleLogger.log.de.htwberlin="info"
+```
+
 ## Übungen
 Es gibt eine Übung zur Wiederholung von SQL, zwei Übungen zur Implementierung von datenbank-orientierten Diensten in Java und eine Übung zur Implementierung eines datenbank-orientierten Dienstes in PL/SQL. 
 
