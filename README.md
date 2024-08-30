@@ -3,10 +3,14 @@ Dieses Repository beinhaltet den kompletten Satz an Übungsaufgaben für das Mod
 
 Importieren sie das Repository in ihren eigenen Github-Account und setzen sie die Sichtbarkeit auf "private", damit andere Gruppen nicht ihre Lösungen einsehen können. Klonen sie dan ihr Repository (nicht meines) und bearbeiten sie es mit der IDE ihrer Wahl (VS Code, IntelliJ, Eclipse)
 
-- Anleitung Import [(link)](bbb)
-- Anleitung VS Code [(link)](bbb)
-- Anleitung IntelliJ [(link)](bbb)
-- Anleitung Eclipse [(link)](bbb)
+- Anleitung Import 
+[(link)](bbb)
+- Anleitung VS Code 
+[(link)](https://ic-htw.github.io/home/lv/dbtech/p/ide-vscode.html)
+- Anleitung IntelliJ 
+[(link)](bbb)
+- Anleitung Eclipse 
+[(link)](bbb)
 
 ## Datenmodell
 Zur Bearbeitung der Aufgaben müssen sie das Datenmodell in ihrer eigenen Datenbank anlegen.
