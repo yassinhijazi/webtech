@@ -26,6 +26,12 @@ Zur Bearbeitung der Aufgaben müssen sie das Datenmodell in ihrer eigenen Datenb
 -Dorg.slf4j.simpleLogger.log.org.dbunit="error"
 -Dorg.slf4j.simpleLogger.log.de.htwberlin="info"
 ```
+Protokollstufen
+- error
+- warn
+- info
+- debug
+
 
 ## Übungen
 Es gibt eine Übung zur Wiederholung von SQL, zwei Übungen zur Implementierung von datenbank-orientierten Diensten in Java und eine Übung zur Implementierung eines datenbank-orientierten Dienstes in PL/SQL. 
