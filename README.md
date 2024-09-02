@@ -1,16 +1,16 @@
 # Datenbanktechnologien -  Proben-Kühlschranksystem
 Dieses Repository beinhaltet den kompletten Satz an Übungsaufgaben für das Modul "Datenbanktechnologien" an der HTW Berlin. Die Aufgaben basieren auf dem Anwendungsfall eines automatisierten  Kühlschranksystems, in denen Blut-, Serum- und Urinproben gelagert werden können.
 
-Importieren sie das Repository in ihren eigenen Github-Account und setzen sie die Sichtbarkeit auf "private", damit andere Gruppen nicht ihre Lösungen einsehen können. Klonen sie dan ihr Repository (nicht meines) und bearbeiten sie es mit der IDE ihrer Wahl (VS Code, IntelliJ, Eclipse)
+Importieren sie das Repository in ihren eigenen Github-Account und setzen sie die Sichtbarkeit auf "private", damit andere Gruppen nicht ihre Lösungen einsehen können. Klonen sie dann ihr Repository (nicht meines) und bearbeiten sie es mit der IDE ihrer Wahl (VS Code, IntelliJ, Eclipse)
 
 - Anleitung Import 
-[(link)](bbb)
+[(link)](https://ic-htw.github.io/home/lv/dbtech/p/github-import.html)
 - Anleitung VS Code 
 [(link)](https://ic-htw.github.io/home/lv/dbtech/p/ide-vscode.html)
 - Anleitung IntelliJ 
-[(link)](bbb)
+[(link)](https://ic-htw.github.io/home/lv/dbtech/p/ide-intellij.html)
 - Anleitung Eclipse 
-[(link)](bbb)
+[(link)](https://ic-htw.github.io/home/lv/dbtech/p/ide-eclipse.html)
 
 ## Datenmodell
 Zur Bearbeitung der Aufgaben müssen sie das Datenmodell in ihrer eigenen Datenbank anlegen.
@@ -20,6 +20,7 @@ Zur Bearbeitung der Aufgaben müssen sie das Datenmodell in ihrer eigenen Datenb
 [(link)](https://github.com/ic-htw/dbtech-pks/tree/main/db/proben-kuehlschrank)
 
 ## Logging
+Die Verwendung der Logging-Einstellungen wird in der Übung erläutert.
 ```java
 -Dorg.slf4j.simpleLogger.showThreadName="false"
 -Dorg.slf4j.simpleLogger.logFile="System.out"
