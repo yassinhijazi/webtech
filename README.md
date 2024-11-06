@@ -67,8 +67,12 @@ public interface ICoolingService {
   void transferSample(Integer sampleId, Integer diameterInCM);
 }
 ```
-Details zu den Diensten finden sie hier 
+Details zu dem Dienst finden sie hier 
 [(link)](https://github.com/ic-htw/dbtech-pks/blob/main/javasrc/de/htwberlin/dbtech/aufgaben/ue03/ICoolingService.java)
+
+Dieser Dienst soll in zwei Versionen implementiert werden:
+1. Standardimplementierung in einer Java-Datei CoolingService.java wie bei Übung 2
+1. Implementierung auf Grundlage eines Architekturmusters (Table-Data-Gateway, Row-Data-Gateway oder Data-Access-Object) in einer Datei CoolingServiceDao.java und zusätzlichen Interfaces und Klassen zur Implementierung der DAOs
 
 ### Übung 4
 Diese Übung dient zur Implementierung eines komplexen Dienstes innerhalb des Datenbanksystems mit PL/SQL. Dabei soll der Dienst aus Übung 3 in diesem neuen Umfeld reimplementiert werden.
