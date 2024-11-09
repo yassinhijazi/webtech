@@ -39,6 +39,12 @@ Es gibt eine Übung zur Wiederholung von SQL, zwei Übungen zur Implementierung 
 
 Für die Dienste werden Test bereitgestellt, mit denen sie die Funktionsfähigkeit ihrer Lösungen überprüfen können. Bedenken Sie aber, dass eine erfolgreiche Ausführung aller Tests nicht automatisch die Korrektheit Ihrer Lösung sicherstellt. Tests können immer nur die Anwesenheit von Fehlern zeigen, nicht aber deren Abwesenheit. Das liegt daran, dass Tests im Allgemeinen nicht vollständig alle Fehlersituationen abdecken. In der Bewertung Ihrer Lösung ist daher der erfolgreiche Durchlauf aller Tests eine notwendige Bedingung zum Erreichen der vollen Punktzahl. Es kann aber trotzdem Punktabzug geben, falls Ihre Lösung Fehler enthält, die durch die Tests nicht aufgedeckt werden.
 
+### Bonuspukte
+Im Laufe des Semesters kann jede Gruppe einmalig 2 Bonuspunkte durch die Präsentation von Lösungsbestandteilen der Übung 2 oder 3 erhalten. Es gelten folgende Bedingungen
+- Die Punkte können als Ausgleich für Punktabzüge bei den abgegeben Lösungen dienen
+- Sie können trotzdem nur insgesamt 40 Punkte in den Übungen erreichen
+- Sollte die Summe regulärer Punkte plus Bonuspunkte 40 übersteigen wird auf 40 gekappt
+
 ### Übung 1 
 Diese Übung dient zur Wiederholung von SQL und zur Einarbeitung in die Struktur der Daten im Proben-Kühlschranksystem. Die Bearbeitung dieser Übung ist freiwillig, eine Abgabe der Lösungen ist nicht erforderlich. 
 
