@@ -5,6 +5,18 @@ const client = createClient({
   url: 'libsql://filme-yassinhijazi.turso.io',
   authToken: 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzgxMDMwMTksImlkIjoiZWFhYThjZjEtZGY5OS00OGE1LWIyYjYtZmE0ZjZmMzFiNDAzIn0.B5op4YHrHRHNGbDPPKPJZ7O_Kk94BPxxmSjA6ngPYlrxRijMrBdy9fjvtG_Gq1rMmdK9yRi50gcBAJI_6OoeBQ'
 });
+async function testDatabaseConnection() {
+  try {
+    const result = await client.execute({
+      sql: 'SELECT 1', // Eine einfache SQL-Abfrage, die nur eine Zahl zurückgibt
+    });
+    console.log('Datenbankverbindung erfolgreich:', result);
+  } catch (error) {
+    console.error('Fehler bei der Verbindung zur Datenbank:', error);
+  }
+}
+
+testDatabaseConnection();
 
 // Login Handler
 export async function loginUser(username, password) {

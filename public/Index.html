@@ -1,153 +1,174 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Film-Datenbank</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css" />
-    <link rel="stylesheet" href="https://fonts.bunny.net/css?family=abyssinica-sil:400" />
-    <link rel="stylesheet" href="filmeseite.css" />
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieYas</title>
+    <link rel="stylesheet" href="filmeseite.css">
+</head>
+<body>
+    <!-- Header -->
     <header>
-      <a href=".">
-        <h1>Film-Datenbank</h1>
-      </a>
-      <nav>
-        <a href="kontakt.html">Kontakt</a>
-        <a href="impressum.html">Impressum</a>
-      </nav>
-
-      <div class="spacer"></div>
-
-      <input type="search" placeholder="Suche Filme…" />
-     <!-- <a href="login.html">Login</a>-->
-     <header>
-      <h1>MovieHub</h1>
-      <p>Fime, Bewertungen und Rankings</p>
-      <div class="header-buttons">
-          <button onclick="window.location.href='anmelden.html'">Anmelden</button>
-          <button onclick="window.location.href='registrieren.html'">Registrieren</button>
-      </div>
-  </header>
+        <div class="header-content">
+            <h1 class="site-title">Movie<span class="title-part">Yas</span></h1>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Suche nach Filmen..." onkeyup="filterMovies()">
+            </div>
+        
+            <div class="auth-buttons">
+                <a href="registrieren.html" class="button">Registrieren</a>
+                <a href="anmelden.html" class="button">Anmelden</a>
+            </div>
+        </div>
     </header>
+  
 
-    <main>
-      <div class="profil">
-        <div class="profil-header">
-          <div class="profil-bild">
-            <!-- Platzhalter für Profilbild -->
-            <img src="https://via.placeholder.com/100" alt="Profilbild" id="profilbild" />
-            <button onclick="uploadBild()">Profilbild hochladen</button>
-          </div>
+    <!-- Willkommensbereich -->
+    <section class="welcome-section">
+        <h2>Willkommen bei MovieYas!</h2>
+        <p>Erstelle jetzt einen Account und erhalte Zugang zu exklusiven Inhalten und personalisierten Empfehlungen.</p>
+    </section>
 
-          <div class="profil-info">
-            <h2>Benutzerprofil</h2>
-            <p><strong>Benutzername:</strong> Max Mustermann</p>
-            <p><strong>E-Mail:</strong> max.mustermann@example.com</p>
-            <p><strong>Mitglied seit:</strong> Januar 2022</p>
-            <button onclick="alert('Profil bearbeiten')">Profil bearbeiten</button>
-          </div>
+    <section class="top-movies">
+        <h2>Top-Filme der Woche</h2>
+        <!-- Filter Dropdown für Kategorien, jetzt über den Filmen -->
+        <div class="category-filter-container">
+            <select id="categoryFilter" onchange="filterMovies()">
+                <option value="">Alle Kategorien</option>
+                <option value="Action">Action</option>
+                <option value="Komödie">Komödie</option>
+                <option value="Drama">Drama</option>
+                <option value="Horror">Horror</option>
+                <option value="Science-Fiction">Science-Fiction</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Romantik">Romantik</option>
+                <option value="Animation">Animation</option>
+                <option value="Dokumentation">Dokumentation</option>
+            </select>
         </div>
-      </div>
 
-      <!-- Formular zum Hinzufügen eines Films -->
-      <section class="film-hinzufuegen">
-        <h2>Film hinzufügen</h2>
-        <form id="add-film-form">
-          <label for="bezeichnung">Bezeichnung:</label>
-          <input type="text" id="bezeichnung" name="bezeichnung" required />
-
-          <label for="kategorie">Kategorie:</label>
-          <input type="text" id="kategorie" name="kategorie" required />
-
-          <label for="bewertung">Bewertung:</label>
-          <input type="number" id="bewertung" name="bewertung" min="1" max="10" step="0.1" required />
-
-          <button type="submit">Film hinzufügen</button>
-        </form>
-      </section>
-
-      <section class="top-bewertete-filme">
-        <h2>Top bewertete Filme</h2>
-        <div class="filme-container" id="film-list">
-          <!-- Hier werden die Filme aus der Datenbank geladen -->
+        <!-- Filme -->
+        <div class="movie-grid">
+            <!-- Movie Cards (unverändert) -->
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film1">
+                <h3>Film1</h3>
+                <p class="category">Action</p>
+                <p class="description">Ein spannender Actionfilm mit vielen Explosionen.</p>
+                <p class="year">Erscheinungsjahr: 2018</p>
+                <p class="rating">Bewertung: 8/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film2">
+                <h3>Film2</h3>
+                <p class="category">Komödie</p>
+                <p class="description">Ein lustiger Film, der dich zum Lachen bringt.</p>
+                <p class="year">Erscheinungsjahr: 2021</p>
+                <p class="rating">Bewertung: 7/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film3">
+                <h3>Film3</h3>
+                <p class="category">Drama</p>
+                <p class="description">Ein bewegender Film über das Leben und die Liebe.</p>
+                <p class="year">Erscheinungsjahr: 2015</p>
+                <p class="rating">Bewertung: 9/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film4">
+                <h3>Film4</h3>
+                <p class="category">Horror</p>
+                <p class="description">Ein gruseliger Film, der dich nicht schlafen lässt.</p>
+                <p class="year">Erscheinungsjahr: 2020</p>
+                <p class="rating">Bewertung: 6/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film5">
+                <h3>Film5</h3>
+                <p class="category">Science-Fiction</p>
+                <p class="description">Eine Reise durch die Galaxie voller Abenteuer.</p>
+                <p class="year">Erscheinungsjahr: 2019</p>
+                <p class="rating">Bewertung: 8.5/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film6">
+                <h3>Film6</h3>
+                <p class="category">Fantasy</p>
+                <p class="description">Eine magische Welt voller Fabelwesen und Helden.</p>
+                <p class="year">Erscheinungsjahr: 2022</p>
+                <p class="rating">Bewertung: 7.5/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film7">
+                <h3>Film7</h3>
+                <p class="category">Thriller</p>
+                <p class="description">Ein nervenaufreibender Film mit vielen Wendungen.</p>
+                <p class="year">Erscheinungsjahr: 2017</p>
+                <p class="rating">Bewertung: 8/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film8">
+                <h3>Film8</h3>
+                <p class="category">Romantik</p>
+                <p class="description">Eine herzerwärmende Liebesgeschichte.</p>
+                <p class="year">Erscheinungsjahr: 2020</p>
+                <p class="rating">Bewertung: 7/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film9">
+                <h3>Film9</h3>
+                <p class="category">Animation</p>
+                <p class="description">Ein farbenfroher Film für die ganze Familie.</p>
+                <p class="year">Erscheinungsjahr: 2016</p>
+                <p class="rating">Bewertung: 9/10</p>
+            </div>
+            <div class="movie-card">
+                <img src="film.jpeg" alt="Film10">
+                <h3>Film10</h3>
+                <p class="category">Dokumentation</p>
+                <p class="description">Ein informativer Blick hinter die Kulissen.</p>
+                <p class="year">Erscheinungsjahr: 2021</p>
+                <p class="rating">Bewertung: 8/10</p>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <section class="neu-hinzugefuegte-filme">
-        <h2>Neu hinzugefügte Filme</h2>
-        <div class="filme-container">
-          <!-- Hier können weitere Filme hinzugefügt werden -->
-        </div>
-      </section>
-    </main>
-
+    <!-- Footer -->
     <footer>
-      <a href="impressum.html">Impressum</a>
-      <a href="kontakt.html">Kontakt</a>
+        <div class="footer-content">
+            <p>&copy; 2023 MovieYas. Alle Rechte vorbehalten.</p>
+            <nav>
+                <a href="#">Impressum</a> |
+                <a href="#">Datenschutz</a> |
+                <a href="#">Kontakt</a>
+            </nav>
+        </div>
     </footer>
 
     <script>
-      // Temporäre Funktion für den Bewerten-Button
-      function bewerten() {
-        alert('Bewertung abgegeben!');
-      }
+        // Filterfunktion für Filme
+        function filterMovies() {
+            // Holen des Suchbegriffs und der ausgewählten Kategorie
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var selectedCategory = document.getElementById('categoryFilter').value.toLowerCase();
+            var movieCards = document.querySelectorAll('.movie-card');
 
-      // Funktion zum "Hochladen" eines Profilbildes
-      function uploadBild() {
-        alert('Profilbild hochladen');
-      }
+            // Durch alle Filme iterieren und die Filter anwenden
+            movieCards.forEach(function(card) {
+                var title = card.querySelector('h3').textContent.toLowerCase();
+                var category = card.querySelector('.category').textContent.toLowerCase();
 
-      // Event-Listener für das Hinzufügen eines Films
-      document.getElementById('add-film-form').addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        const bezeichnung = document.getElementById('bezeichnung').value;
-        const kategorie = document.getElementById('kategorie').value;
-        const bewertung = document.getElementById('bewertung').value;
-
-        // Filme hinzufügen in der Turso-Datenbank
-        try {
-          await addFilm(bezeichnung, kategorie, parseFloat(bewertung));  // Film in DB hinzufügen
-          alert('Film wurde hinzugefügt!');
-          displayFilms();  // Aktualisiere die Anzeige der Filme
-        } catch (error) {
-          alert('Fehler beim Hinzufügen des Films!');
+                // Film anzeigen, wenn er entweder den Suchbegriff im Titel oder in der Kategorie hat,
+                // und zusätzlich die Kategorie mit der ausgewählten übereinstimmt
+                if ((title.includes(input) || category.includes(input)) && 
+                    (selectedCategory === "" || category === selectedCategory)) {
+                    card.style.display = "block";  // Film anzeigen
+                } else {
+                    card.style.display = "none";   // Film ausblenden
+                }
+            });
         }
-      });
-
-      // Film-Daten von der Datenbank abrufen und anzeigen
-      async function displayFilms() {
-        const films = await fetchFilms();
-        const filmContainer = document.getElementById('film-list');
-        filmContainer.innerHTML = '';  // Leert den Container
-
-        films.forEach(film => {
-          const filmElement = document.createElement('div');
-          filmElement.classList.add('film-card');
-          filmElement.innerHTML = `
-            <div class="film-content">
-              <h2>${film.bezeichnung}</h2>
-              <p>Kategorie: ${film.kategorie}</p>
-              <p>Bewertung: ${film.bewertung}</p>
-            </div>
-          `;
-          filmContainer.appendChild(filmElement);
-        });
-      }
-
-      // Funktion zum Abrufen der Filme aus der Datenbank
-      async function fetchFilms() {
-        try {
-          const response = await fetch('/get-films');  // Dein API-Endpunkt zum Abrufen der Filme
-          const data = await response.json();
-          return data.filme;
-        } catch (error) {
-          console.error('Fehler beim Abrufen der Filme:', error);
-          return [];
-        }
-      }
     </script>
-  </body>
+</body>
 </html>

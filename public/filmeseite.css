@@ -3,13 +3,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #000; /* Schwarzer Hintergrund */
+    color: #fff; /* Weiße Schriftfarbe */
 }
 
 /* Header */
 header {
-    background-color: #333;
+    background-color: #001f3f; /* Dunkelblau */
     color: white;
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -26,11 +26,11 @@ header {
 .site-title {
     font-size: 24px;
     margin: 0;
-    color: #ff6347; /* Tomate */
+    color: #007bff; /* Helles Blau */
 }
 
 .title-part {
-    color: #00ced1; /* Dunkeltürkis */
+    color: #00aaff; /* Hellblau */
 }
 
 .search-bar input {
@@ -50,32 +50,33 @@ header {
     color: white;
     text-decoration: none;
     padding: 8px 15px;
-    background-color: #555;
+    background-color: #004080; /* Dunkleres Blau */
     border-radius: 5px;
     font-size: 14px;
     transition: background-color 0.3s ease;
 }
 
 .auth-buttons .button:hover {
-    background-color: #777;
+    background-color: #0056b3;
 }
 
 /* Willkommensbereich */
 .welcome-section {
     text-align: center;
     padding: 40px 20px;
-    background-color: #e2e2e2;
+    background-color: #00264d; /* Dunkelblau */
     margin-bottom: 20px;
 }
 
 .welcome-section h2 {
     font-size: 28px;
     margin-bottom: 10px;
+    color: #00aaff;
 }
 
 .welcome-section p {
     font-size: 16px;
-    color: #555;
+    color: #bbb;
 }
 
 /* Top-Filme der Woche */
@@ -88,32 +89,32 @@ header {
 .top-movies h2 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
+    color: #00aaff;
 }
 
 /* Anpassungen für den horizontalen Scroll */
 .movie-grid {
     display: flex;
-    flex-wrap: nowrap; /* Verhindert Zeilenumbrüche */
-    overflow-x: auto; /* Ermöglicht horizontalen Scroll */
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 20px;
     padding: 10px 0;
 }
 
 .movie-card {
-    flex: 0 0 auto; /* Verhindert, dass die Karten schrumpfen */
+    flex: 0 0 auto;
     width: 200px;
-    background-color: white;
+    background-color: #001f3f;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .movie-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
 
 .movie-card img {
@@ -126,30 +127,30 @@ header {
 .movie-card h3 {
     font-size: 18px;
     margin: 10px 0 5px;
-    color: #333;
+    color: #00aaff;
 }
 
 .movie-card .category {
     font-size: 14px;
-    color: #00ced1; /* Dunkeltürkis */
+    color: #007bff;
     margin-bottom: 5px;
 }
 
 .movie-card .description {
     font-size: 14px;
-    color: #666;
+    color: #ccc;
     margin-bottom: 10px;
 }
 
 .movie-card .rating {
     font-size: 14px;
-    color: #ff6347; /* Tomate */
+    color: #ffcc00;
     font-weight: bold;
 }
 
 /* Footer */
 footer {
-    background-color: #333;
+    background-color: #001f3f;
     color: white;
     padding: 20px;
     text-align: center;
@@ -175,10 +176,112 @@ footer nav a {
 footer nav a:hover {
     text-decoration: underline;
 }
-/* Neue Stile für Erscheinungsjahr */
+
+/* Erscheinungsjahr */
 .movie-card .year {
     font-size: 12px;
-    color: #888;
+    color: #aaa;
     margin-bottom: 5px;
+}
+/* Allgemeine Stile */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Schwarzer Hintergrund */
+    color: #fff; /* Weiße Schriftfarbe */
+}
+
+/* Authentifizierungsbereich */
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Formular */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Formularfelder */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #00aaff; /* Hellblau */
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #007bff; /* Hellblauer Rand */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #001f3f; /* Dunkelblauer Hintergrund */
+    color: white; /* Weißer Text */
+}
+
+.form-group input:focus {
+    border-color: #00aaff; /* Hellblauer Fokus */
+    outline: none;
+}
+
+/* Schaltflächen */
+.btn {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Nachrichten */
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    margin-top: 10px;
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Text im Willkommensbereich */
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #00aaff;
+}
+
+p {
+    font-size: 16px;
+    color: #bbb;
 }
 
