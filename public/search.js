@@ -1,24 +1,25 @@
-<script>
-    // Filterfunktion für Filme
+// Wait for the DOM to load before running the script
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.querySelector(".search-bar input");  // Das Suchfeld
+    const movieCards = document.querySelectorAll(".movie-card");  // Alle Filmkarten
+
+    // Funktion zum Filtern der Filme
     function filterMovies() {
-        // Holen des Suchbegriffs und der ausgewählten Kategorie
-        var input = document.getElementById('searchInput').value.toLowerCase();
-        var selectedCategory = document.getElementById('categoryFilter').value.toLowerCase();
-        var movieCards = document.querySelectorAll('.movie-card');
-
-        // Durch alle Filme iterieren und die Filter anwenden
+        const query = searchInput.value.toLowerCase();  // Eingabewert im Suchfeld
         movieCards.forEach(function(card) {
-            var title = card.querySelector('h3').textContent.toLowerCase();
-            var category = card.querySelector('.category').textContent.toLowerCase();
+            const title = card.querySelector("h3").textContent.toLowerCase();  // Titel des Films
+            const category = card.querySelector(".category").textContent.toLowerCase();  // Kategorie des Films
+            const description = card.querySelector(".description").textContent.toLowerCase();  // Beschreibung des Films
 
-            // Film anzeigen, wenn er entweder den Suchbegriff im Titel oder in der Kategorie hat,
-            // und zusätzlich die Kategorie mit der ausgewählten übereinstimmt
-            if ((title.includes(input) || category.includes(input)) && 
-                (selectedCategory === "" || category === selectedCategory)) {
-                card.style.display = "block";  // Film anzeigen
+            // Überprüfe, ob der Suchbegriff im Titel, der Kategorie oder der Beschreibung vorkommt
+            if (title.includes(query) || category.includes(query) || description.includes(query)) {
+                card.style.display = "";  // Zeige den Film an, wenn es eine Übereinstimmung gibt
             } else {
-                card.style.display = "none";   // Film ausblenden
+                card.style.display = "none";  // Verstecke den Film, wenn es keine Übereinstimmung gibt
             }
         });
     }
-</script>
+
+    // Füge einen Event Listener hinzu, der die Filter-Funktion bei jeder Eingabe im Suchfeld ausführt
+    searchInput.addEventListener("input", filterMovies);
+});
