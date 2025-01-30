@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Anmelden - MovieHub</title>
+    <link rel="stylesheet" href="filmeseite.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Anmelden</h2>
+        <form id="loginForm" class="auth-form">
+            <div class="form-group">
+                <label for="username">Benutzername:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Passwort:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn">Anmelden</button>
+        </form>
+        <p>Noch kein Konto? <a href="registrieren.html">Jetzt registrieren</a></p>
+    </div>
+    <script type="module">
+        import { loginUser } from './auth.js';
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const result = await loginUser(username, password);
+            if (result.success) {
+                window.location.href = 'index.html';
+            } else {
+                alert(result.error);
+            }
+        });
+    </script>
+</body>
+</html>

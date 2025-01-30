@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieYas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css" />
+    <link rel="stylesheet" href="https://fonts.bunny.net/css?family=abyssinica-sil:400" />
+    <link rel="stylesheet" href="filmeseite.css" />
+    <script src="rating-system.js" defer></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <h1>MovieYas</h1>
+            </a>
+            <nav class="main-nav">
+                <div class="search-container">
+                    <input type="search" id="movieSearch" placeholder="Suche Filme…" />
+                    <button onclick="searchMovies()" class="btn">Suchen</button>
+                </div>
+                <div class="auth-buttons" id="authButtons">
+                    <a href="anmelden.html" class="btn">Anmelden</a>
+                    <a href="registrieren.html" class="btn">Registrieren</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Benutzer-Profil Sektion -->
+        <div class="user-profile" id="userProfile" style="display: none;">
+            <div class="profile-header">
+                <div class="profile-image">
+                    <img src="/api/placeholder/100/100" alt="Profilbild" id="profileImage" />
+                    <button onclick="uploadProfileImage()" class="btn">Profilbild ändern</button>
+                </div>
+                <div class="profile-info">
+                    <h2>Mein Profil</h2>
+                    <p id="username"></p>
+                    <p id="memberSince"></p>
+                    <button onclick="editProfile()" class="btn">Profil bearbeiten</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Film hinzufügen Sektion - Nur für eingeloggte Benutzer sichtbar -->
+        <section class="movie-section" id="addMovieSection" style="display: none;">
+            <h2>Film hinzufügen</h2>
+            <form id="addMovieForm" class="movie-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Titel:</label>
+                    <input type="text" id="title" name="title" required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Kategorie:</label>
+                    <select id="category" name="category" required>
+                        <option value="">Bitte wählen</option>
+                        <option value="action">Action</option>
+                        <option value="comedy">Komödie</option>
+                        <option value="drama">Drama</option>
+                        <option value="horror">Horror</option>
+                        <option value="scifi">Science Fiction</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Beschreibung:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Bewertung:</label>
+                    <div class="rating-container">
+                        <div class="star-rating" id="addMovieRating"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="movieImage">Filmbild:</label>
+                    <input type="file" id="movieImage" name="movieImage" accept="image/*" />
+                </div>
+
+                <button type="submit" class="btn">Film hinzufügen</button>
+            </form>
+        </section>
+
+        <!-- Top Filme Sektion -->
+        <section class="movie-section">
+            <h2>Top Filme</h2>
+            <div class="movie-grid" id="movieGrid">
+                <!-- Wird dynamisch befüllt -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <nav>
+            <a href="impressum.html">Impressum</a>
+            <a href="datenschutz.html">Datenschutz</a>
+            <a href="kontakt.html">Kontakt</a>
+        </nav>
+    </footer>
+
+    <script type="module">
+        import { checkAuthStatus, logoutUser } from './auth.js';
+
+        // UI Update basierend auf Auth-Status
+        function updateAuthUI() {
+            const userData = checkAuthStatus();
+            const authButtons = document.getElementById('authButtons');
+            const userProfile = document.getElementById('userProfile');
+            const addMovieSection = document.getElementById('addMovieSection');
+            
+            if (userData) {
+                // Benutzer ist eingeloggt
+                authButtons.innerHTML = `
+                    <span>Hallo, ${userData.username}</span>
+                    <button onclick="window.handleLogout()" class="btn">Ausloggen</button>
+                `;
+                userProfile.style.display = 'block';
+                addMovieSection.style.display = 'block';
+                updateProfileUI(userData);
+            } else {
+                // Benutzer ist nicht eingeloggt
+                authButtons.innerHTML = ` 
+                    <a href="anmelden.html" class="btn">Anmelden</a>
+                    <a href="registrieren.html" class="btn">Registrieren</a>
+                `;
+                userProfile.style.display = 'none';
+                addMovieSection.style.display = 'none';
+            }
+        }
+
+        function updateProfileUI(userData) {
+            document.getElementById('username').textContent = `Benutzername: ${userData.username}`;
+            document.getElementById('memberSince').textContent = `Mitglied seit: ${userData.memberSince}`;
+        }
+
+        // Film-Funktionen
+        function createMovieCard(movieData) {
+            const movieCard = document.createElement('div');
+            movieCard.className = 'movie-card';
+            movieCard.dataset.movieId = movieData.id;
+            movieCard.dataset.rating = movieData.rating || 0;
+            
+            movieCard.innerHTML = `
+                <img src="${movieData.image || '/api/placeholder/250/200'}" alt="${movieData.title}" />
+                <div class="movie-info">
+                    <h3>${movieData.title}</h3>
+                    <p class="category">Kategorie: ${movieData.category}</p>
+                    <div class="rating-container"></div>
+                    <p class="average-rating">Durchschnitt: ${movieData.averageRating?.toFixed(1) || '0.0'}</p>
+                    <p class="description">${movieData.description}</p>
+                </div>
+            `;
+
+            return movieCard;
+        }
+
+        function updateMovieGrid(movies) {
+            const grid = document.getElementById('movieGrid');
+            grid.innerHTML = '';
+            movies.forEach(movie => {
+                const card = createMovieCard(movie);
+                grid.appendChild(card);
+                // Event auslösen für Rating-System
+                document.dispatchEvent(new CustomEvent('movieAdded', {
+                    detail: {
+                        movieElement: card,
+                        rating: movie.rating || 0
+                    }
+                }));
+            });
+        }
+
+        async function searchMovies() {
+            const searchTerm = document.getElementById('movieSearch').value;
+            try {
+                const response = await fetch(`/api/movies/search?q=${encodeURIComponent(searchTerm)}`);
+                if (response.ok) {
+                    const movies = await response.json();
+                    updateMovieGrid(movies);
+                }
+            } catch (error) {
+                console.error('Search failed:', error);
+            }
+        }
+
+        // Logout Handler (global verfügbar machen)
+        window.handleLogout = () => {
+            logoutUser();
+            updateAuthUI();
+        };
+
+        // Formular Event Handler
+        document.getElementById('addMovieForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('/api/movies', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    form.reset();
+                    if (window.movieRating) {
+                        window.movieRating.resetStars(form.querySelector('.rating-container'), 0);
+                    }
+                    alert('Film erfolgreich hinzugefügt!');
+                    // Filme neu laden
+                    const movies = await (await fetch('/api/movies')).json();
+                    updateMovieGrid(movies);
+                }
+            } catch (error) {
+                console.error('Error adding movie:', error);
+                alert('Fehler beim Hinzufügen des Films');
+            }
+        });
+
+        // Initialisierung
+        window.addEventListener('load', () => {
+            updateAuthUI();
+            // Initial movies laden
+            fetch('/api/movies')
+                .then(response => response.json())
+                .then(movies => updateMovieGrid(movies))
+                .catch(error => console.error('Error loading movies:', error));
+        });
+    </script>
+</body>
+</html>

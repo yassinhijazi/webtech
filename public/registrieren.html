@@ -1,0 +1,126 @@
+<!DOCTYPE html> 
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrieren - MovieHub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css">
+    <link rel="stylesheet" href="filmeseite.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Registrieren</h2>
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="username">Benutzername:</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Passwort:</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <label for="password2">Passwort wiederholen:</label>
+                <input type="password" id="password2" required>
+            </div>
+            <button type="submit" class="btn">Registrieren</button>
+            <div id="message"></div>
+        </form>
+        <p style="margin-top: 20px; text-align: center;">
+            Bereits ein Konto? <a href="anmelden.html">Jetzt anmelden</a>
+        </p>
+    </div>
+
+    <script type="module">
+        import { registerUser } from './auth.js';
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const messageDiv = document.getElementById('message');
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const password2 = document.getElementById('password2').value;
+            
+            // Reset message
+            messageDiv.className = '';
+            messageDiv.textContent = '';
+            
+            if (password !== password2) {
+                messageDiv.className = 'error-message';
+                messageDiv.textContent = 'Die Passwörter stimmen nicht überein!';
+                return;
+            }
+            
+            const result = await registerUser(username, password);
+            if (result.success) {
+                messageDiv.className = 'success-message';
+                messageDiv.textContent = 'Registrierung erfolgreich! Sie werden weitergeleitet...';
+                setTimeout(() => {
+                    window.location.href = 'anmelden.html';
+                }, 2000);
+            } else {
+                messageDiv.className = 'error-message';
+                messageDiv.textContent = result.error;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Film-Datenbank</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css" />
+    <link rel="stylesheet" href="https://fonts.bunny.net/css?family=abyssinica-sil:400" />
+    <link rel="stylesheet" href="filmeseite.css" />
+  </head>
+  <body>
+    <header>
+      <a href=".">
+        <h1>Film-Datenbank</h1>
+      </a>
+      <nav>
+        <a href="kontakt.html">Kontakt</a>
+        <a href="impressum.html">Impressum</a>
+      </nav>
+
+      <div class="spacer"></div>
+
+      <input type="search" placeholder="Suche Filme…" />
+     <!-- <a href="login.html">Login</a>-->
+     <header>
+      <h1>MovieHub</h1>
+      <p>Fime, Bewertungen und Rankings</p>
+      <div class="header-buttons">
+          <button onclick="window.location.href='anmelden.html'">Anmelden</button>
+          <button onclick="window.location.href='registrieren.html'">Registrieren</button>
+      </div>
+  </header>
+    </header>
+
+    <main>
+      <div class="profil">
+        <div class="profil-header">
+          <div class="profil-bild">
+            <!-- Platzhalter für Profilbild -->
+            <img src="https://via.placeholder.com/100" alt="Profilbild" id="profilbild" />
+            <button onclick="uploadBild()">Profilbild hochladen</button>
+          </div>
+
+          <div class="profil-info">
+            <h2>Benutzerprofil</h2>
+            <p><strong>Benutzername:</strong> Max Mustermann</p>
+            <p><strong>E-Mail:</strong> max.mustermann@example.com</p>
+            <p><strong>Mitglied seit:</strong> Januar 2022</p>
+            <button onclick="alert('Profil bearbeiten')">Profil bearbeiten</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formular zum Hinzufügen eines Films -->
+      <section class="film-hinzufuegen">
+        <h2>Film hinzufügen</h2>
+        <form id="add-film-form">
+          <label for="bezeichnung">Bezeichnung:</label>
+          <input type="text" id="bezeichnung" name="bezeichnung" required />
+
+          <label for="kategorie">Kategorie:</label>
+          <input type="text" id="kategorie" name="kategorie" required />
+
+          <label for="bewertung">Bewertung:</label>
+          <input type="number" id="bewertung" name="bewertung" min="1" max="10" step="0.1" required />
+
+          <button type="submit">Film hinzufügen</button>
+        </form>
+      </section>
+
+      <section class="top-bewertete-filme">
+        <h2>Top bewertete Filme</h2>
+        <div class="filme-container" id="film-list">
+          <!-- Hier werden die Filme aus der Datenbank geladen -->
+        </div>
+      </section>
+
+      <section class="neu-hinzugefuegte-filme">
+        <h2>Neu hinzugefügte Filme</h2>
+        <div class="filme-container">
+          <!-- Hier können weitere Filme hinzugefügt werden -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a href="impressum.html">Impressum</a>
+      <a href="kontakt.html">Kontakt</a>
+    </footer>
+
+    <script>
+      // Temporäre Funktion für den Bewerten-Button
+      function bewerten() {
+        alert('Bewertung abgegeben!');
+      }
+
+      // Funktion zum "Hochladen" eines Profilbildes
+      function uploadBild() {
+        alert('Profilbild hochladen');
+      }
+
+      // Event-Listener für das Hinzufügen eines Films
+      document.getElementById('add-film-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const bezeichnung = document.getElementById('bezeichnung').value;
+        const kategorie = document.getElementById('kategorie').value;
+        const bewertung = document.getElementById('bewertung').value;
+
+        // Filme hinzufügen in der Turso-Datenbank
+        try {
+          await addFilm(bezeichnung, kategorie, parseFloat(bewertung));  // Film in DB hinzufügen
+          alert('Film wurde hinzugefügt!');
+          displayFilms();  // Aktualisiere die Anzeige der Filme
+        } catch (error) {
+          alert('Fehler beim Hinzufügen des Films!');
+        }
+      });
+
+      // Film-Daten von der Datenbank abrufen und anzeigen
+      async function displayFilms() {
+        const films = await fetchFilms();
+        const filmContainer = document.getElementById('film-list');
+        filmContainer.innerHTML = '';  // Leert den Container
+
+        films.forEach(film => {
+          const filmElement = document.createElement('div');
+          filmElement.classList.add('film-card');
+          filmElement.innerHTML = `
+            <div class="film-content">
+              <h2>${film.bezeichnung}</h2>
+              <p>Kategorie: ${film.kategorie}</p>
+              <p>Bewertung: ${film.bewertung}</p>
+            </div>
+          `;
+          filmContainer.appendChild(filmElement);
+        });
+      }
+
+      // Funktion zum Abrufen der Filme aus der Datenbank
+      async function fetchFilms() {
+        try {
+          const response = await fetch('/get-films');  // Dein API-Endpunkt zum Abrufen der Filme
+          const data = await response.json();
+          return data.filme;
+        } catch (error) {
+          console.error('Fehler beim Abrufen der Filme:', error);
+          return [];
+        }
+      }
+    </script>
+  </body>
+</html>
