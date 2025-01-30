@@ -1,0 +1,11 @@
+create or replace package cooling_service as
+  exc_data exception;
+  pragma exception_init(exc_data, -20001);
+  exc_cooling_system exception;
+  pragma exception_init(exc_cooling_system, -20002);
+
+  procedure transfer_sample(
+    p_sample_id sample.sampleid%type, 
+    p_diameter_in_cm tray.diameterincm%type);
+end cooling_service;
+
